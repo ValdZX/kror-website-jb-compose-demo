@@ -33,30 +33,37 @@ kotlin {
         from(jsBrowserDistribution)
     }
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(kotlin("stdlib-common"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
-                implementation(compose.web.widgets)
-                implementation(compose.runtime)
-                implementation("io.ktor:ktor-client-websockets:$ktorVersion")
-                implementation("io.ktor:ktor-client-logging:$ktorVersion")
-            }
-        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
+        val commonClient = create("commonClient") {
+            dependencies {
+                implementation(kotlin("stdlib-common"))
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+                implementation(compose.runtime)
+                implementation(compose.web.widgets)
+                implementation("io.ktor:ktor-client-websockets:$ktorVersion")
+                implementation("io.ktor:ktor-client-logging:$ktorVersion")
+            }
+        }
         val jvmDesktopMain by getting {
+            dependsOn(commonClient)
             dependencies {
                 implementation(compose.desktop.currentOs)
                 implementation("io.ktor:ktor-client-java:$ktorVersion")
             }
         }
+        val jsMain by getting {
+            dependsOn(commonClient)
+            dependencies {
+            }
+        }
         val jvmServerMain by getting {
             dependencies {
+                implementation(compose.runtime) //can't remove - compose plugin bug
                 implementation("io.ktor:ktor-server-core:$ktorVersion")
                 implementation("io.ktor:ktor-server-netty:$ktorVersion")
                 implementation("io.ktor:ktor-websockets:$ktorVersion")

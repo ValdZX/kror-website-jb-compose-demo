@@ -34,7 +34,7 @@ class CounterStore : Store<CounterState, CounterAction>, CoroutineScope by Corou
 
     init {
         launch(Dispatchers.Default) {
-            client.webSocket(method = HttpMethod.Get, host = "0.0.0.0", port = 8080, path = "/counter") {
+            client.webSocket(method = HttpMethod.Get, host = "0.0.0.0", port = 8180, path = "/counter") {
                 val messageOutputRoutine = launch { outputMessages() }
                 val userInputRoutine = launch { inputMessages() }
                 userInputRoutine.join()
