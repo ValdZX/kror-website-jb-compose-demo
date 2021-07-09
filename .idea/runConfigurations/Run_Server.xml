@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run Server" type="JetRunConfigurationType">
+    <option name="MAIN_CLASS_NAME" value="ua.vald_zx.ktor.compose.demo.ApplicationKt" />
+    <module name="kror-website-jb-compose-demo.jvmServerMain" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
