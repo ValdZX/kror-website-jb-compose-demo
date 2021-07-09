@@ -3,7 +3,6 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     kotlin("multiplatform") version "1.5.10"
-    kotlin("plugin.serialization") version "1.5.10"
     id("org.jetbrains.compose") version "0.5.0-build235"
 }
 
@@ -38,9 +37,10 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
                 implementation(compose.web.widgets)
                 implementation(compose.runtime)
+                implementation("io.ktor:ktor-client-websockets:$ktorVersion")
+                implementation("io.ktor:ktor-client-logging:$ktorVersion")
             }
         }
         val commonTest by getting {
@@ -52,13 +52,13 @@ kotlin {
         val jvmDesktopMain by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
+                implementation("io.ktor:ktor-client-java:$ktorVersion")
             }
         }
         val jvmServerMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-server-core:$ktorVersion")
                 implementation("io.ktor:ktor-server-netty:$ktorVersion")
-                implementation("io.ktor:ktor-html-builder:$ktorVersion")
                 implementation("io.ktor:ktor-websockets:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:$logback_version")
             }
